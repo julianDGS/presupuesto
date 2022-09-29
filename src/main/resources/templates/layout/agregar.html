@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head> 
+        <title>Botones Agregar</title>
+        <meta charset="UTF-8"/>
+    </head>
+    <body>
+        <section th:fragment="agregar" class="py-4 mb-4 bg-light">
+            <div class="container">
+                <div class="row">
+                    <div>
+                        <h1 class="presupuesto_titulo mb-5">[[#{titulo.item}]]</h1>
+                    </div>
+                </div>
+                <div class="col-md-10 mx-auto">
+                    <form th:action="@{/guardar}" th:object="${movimiento}" method="POST" class="row mr-3 mb-3 bg-light">
+                        <div class="col-auto">
+                            <select id="tipo" name="selectTipo" class="form-select" th:title="#{titulo.tipo}" th:field="*{ing}">
+                                <option value="true">+</option>
+                                <option value="false">-</option>
+                            </select>
+                        </div>
+                        <div class="col-auto">
+                            <input type="date" class="form-control"  
+                                   required="true" th:field="*{fecha}"/>
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control" id="descripcion" th:placeholder="#{ph.descripcion}" 
+                                   required="true" th:field="*{concepto}"/>
+                        </div>
+                        <div class="col">
+                            <div class="input-group">
+                                <span class="input-group-text bg-transparent">$</span>
+                                <input type="number" class="form-control" id="valor" th:placeholder="#{titulo.tipo}" 
+                                       required="true" step="any" th:field="*{cantidad}"/>
+                                <span class="input-group-text bg-transparent">COP</span>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fa fas fa-solid fa-circle-check"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>

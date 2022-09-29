@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head> 
+        <title>Listado clientes</title>
+        <meta charset="UTF-8"/>
+    </head>
+    <body>
+        <section th:fragment="cabecero" class="cabecero">
+            <div class="container">
+                <div class="presupuesto_titulo">[[#{titulo.presupuesto}]]</div>
+                <div class="presupuesto_valor" id="prevalor">[[${new java.text.DecimalFormat('#,##0.00').format(saldoTotal)} + ' COP']]</div>
+                <div class="presupuesto_ingreso limpiarEstilos">
+                    <div class="presupuesto_ingreso--texto">[[#{titulo.ingreso}]]</div>
+                    <div class="derecha" >
+                        <div class="presupuesto_ingreso--valor"  id="preingreso">
+                            [[${new java.text.DecimalFormat('#,##0.00').format(saldoIngreso)} + ' COP']]
+                        </div>
+                        <div class="presupuesto_ingreso--porcentaje"></div>
+                    </div>
+                </div>
+                <div class="presupuesto_egreso limpiarEstilos">
+                    <div class="presupuesto_egreso--texto">[[#{titulo.egreso}]]</div>
+                    <div class="derecha">
+                        <div class="presupuesto_egreso--valor" id="preegreso">
+                            [[${new java.text.DecimalFormat('#,##0.00').format(saldoEgreso)} + ' COP']]
+                        </div>
+                        <div class="presupuesto_egreso--porcentaje" id="preegresopercent">
+                            [[${nf.format(porcentaje)}]]
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>

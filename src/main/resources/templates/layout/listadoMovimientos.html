@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head> 
+        <title>Listado clientes</title>
+        <meta charset="UTF-8"/>
+    </head>
+    <body>
+        <section th:fragment="listadoMovimientos">
+            <div class="container">
+                <div class="row mb-5">
+                    <div class="col-md-5 mx-auto">
+                        <div class="ingreso">
+                            <h4 class="ingreso_titulo">[[#{titulo.ingreso}]]</h4>
+                            <div class="elemento limpiarEstilos" th:each="ingre : ${ingreso}">
+                                <div class="elemento_descripcion">
+                                    [[${new java.text.SimpleDateFormat("dd-MM-yyyy").format(ingre.fecha)}]]
+                                </div>
+                                <span style="margin-left: 40px">[[${ingre.concepto}]]</span>
+                                <div class="derecha">
+                                    <div class="elemento_valor">
+                                        [['+' + ${new java.text.DecimalFormat('#,##0.00').format(ingre.cantidad)} + ' COP']]
+                                    </div>
+                                    <div class="elemento_eliminar">
+                                        <a class="elemento_eliminar--btn" th:href="@{/eliminar(idMovimiento=${ingre.idMovimiento})}">
+                                            <i class="fa-sharp fa-solid fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 mx-auto">
+                        <div class="egreso">
+                            <h4 class="egreso_titulo">[[#{titulo.egreso}]]</h4>
+                            <div id="lista-egresos">
+                                <div class="elemento limpiarEstilos" th:each="egre : ${egreso}">
+                                    <div class="elemento_descripcion">
+                                        [[${new java.text.SimpleDateFormat("dd-MM-yyyy").format(egre.fecha)}]]
+                                    </div>
+                                    <span style="margin-left: 30px">[[${egre.concepto}]]</span>
+                                    <div class="derecha">
+                                        <div class="elemento_valor">
+                                            [['-' + ${new java.text.DecimalFormat('#,##0.00').format(egre.cantidad)} + ' COP']]
+                                        </div>
+                                        <div class="elemento_porcentaje">
+                                            [[${nf.format(egre.cantidad/saldoEgreso)}]]
+                                        </div>
+                                        <div class="elemento_eliminar">
+                                            <a class="elemento_eliminar--btn" th:href="@{/eliminar(idMovimiento=${egre.idMovimiento})}">
+                                                <i class="fa-sharp fa-solid fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+        </section>
+    </body>
+</html>
