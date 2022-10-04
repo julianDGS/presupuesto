@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head> 
+        <title>Categoría</title>
+        <meta charset="UTF-8"/>
+    </head>
+    <body>
+        <section th:fragment="categoria">
+            <div id="category" class="modal fade" >
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header bg-dark text-white">
+                            <h5 class="modal-title" th:text="#{categoria.crear}">Agregar Categoria</h5>
+                            <button class="btn btn-dark"  data-bs-dismiss="modal">
+                                <i class="fas fa-solid fa-circle-xmark"></i>
+                            </button>
+                        </div>
+                        <form th:action="@{/guardar-categoria}" th:object="${categoria}" method="POST">
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" th:placeholder="#{categoria.nueva}" required="true" th:field="*{nombre}"/>
+                                </div>
+                                <button type="submit" class="btn btn-success"><i class="fas fa-solid fa-check"></i></button>
+                            </div>
+                        </form>
+                        <div class="py-3 ps-3  bg-dark text-white">
+                            <h5 class="modal-title">[[#{categoria.editar}]]</h5>
+                        </div>
+                        <table class="table table-stryped">
+                            <thead>
+                                <tr>
+                                    <th>[[#{categoria.select}]]</th>
+                                    <th>[[#{row.editar}]]</th>
+                                    <th>[[#{row.eliminar}]]</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="cat : ${catlista}">
+                                    <td th:text="${cat.nombre}"></td>
+                                    <td>
+                                        <a th:href="@{/editar-categoria(idCategoria=${cat.idCategoria})}" class="btn btn-primary" type="button" th:title="#{categoria.crear}">
+                                            <i class="fas fa-solid fa-pen"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{/eliminar-categoria(idCategoria=${cat.idCategoria})}" class="btn btn-danger">
+                                            <i class="fas fa-solid fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>

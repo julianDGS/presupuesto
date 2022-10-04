@@ -1,6 +1,5 @@
 package com.jd.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
@@ -31,5 +30,8 @@ public class Movimiento implements Serializable {
     
     @NotNull
     private boolean ing;
-
+    
+    @ManyToOne()
+    @JoinColumn(name="id_categoria")
+    private Categoria categorias;
 }

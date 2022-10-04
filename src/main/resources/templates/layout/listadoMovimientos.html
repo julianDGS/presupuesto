@@ -11,46 +11,76 @@
             <div class="container">
                 <div class="row mb-5">
                     <div class="col-md-5 mx-auto">
-                        <div class="ingreso">
-                            <h4 class="ingreso_titulo">[[#{titulo.ingreso}]]</h4>
-                            <div class="elemento limpiarEstilos" th:each="ingre : ${ingreso}">
-                                <div class="elemento_descripcion">
-                                    [[${new java.text.SimpleDateFormat("dd-MM-yyyy").format(ingre.fecha)}]]
-                                </div>
-                                <span style="margin-left: 40px">[[${ingre.concepto}]]</span>
-                                <div class="derecha">
-                                    <div class="elemento_valor">
-                                        [['+' + ${new java.text.DecimalFormat('#,##0.00').format(ingre.cantidad)} + ' COP']]
-                                    </div>
-                                    <div class="elemento_eliminar">
-                                        <a class="elemento_eliminar--btn" th:href="@{/eliminar(idMovimiento=${ingre.idMovimiento})}">
-                                            <i class="fa-sharp fa-solid fa-trash"></i>
-                                        </a>
+                        <h4 class="ingreso_titulo">[[#{titulo.ingreso}]]</h4>
+                        <div class="accordion" id="accordionIngreso" th:each="cat : ${catIngreso}">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" th:id="heading + ${cat.idCategoria}">
+                                    <button class="accordion-button collapsed text-white" style="background: #28B9B5" type="button" data-bs-toggle="collapse" th:data-bs-target="'#' + collapse + ${cat.idCategoria}" aria-expanded="false" th:aria-controls="collapse + ${cat.idCategoria}">
+                                        [[${cat.nombre}]]
+                                    </button>
+                                </h2>
+                                <div th:id="collapse + ${cat.idCategoria}" class="accordion-collapse collapse" th:aria-labelledby="heading + ${cat.idCategoria}" data-bs-parent="#accordionIngreso">
+                                    <div class="accordion-body">
+                                        <div th:each="ingre : ${ingreso}">
+                                            <div class="ingreso" th:if="${ingre.categorias.getIdCategoria() == cat.idCategoria}">
+                                                <div class="elemento limpiarEstilos" >
+                                                    <div class="elemento_descripcion">
+                                                        [[${new java.text.SimpleDateFormat("dd-MM-yyyy").format(ingre.fecha)}]]
+                                                    </div>
+                                                    <span style="margin-left: 40px">[[${ingre.concepto}]]</span>
+                                                    <div class="derecha">
+                                                        <div class="elemento_valor">
+                                                            [['+' + ${new java.text.DecimalFormat('#,##0.00').format(ingre.cantidad)} + ' COP']]
+                                                        </div>
+                                                        <div class="elemento_eliminar">
+                                                            <a class="elemento_eliminar--btn" th:href="@{/eliminar(idMovimiento=${ingre.idMovimiento})}">
+                                                                <i class="fa-sharp fa-solid fa-trash"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-5 mx-auto">
-                        <div class="egreso">
-                            <h4 class="egreso_titulo">[[#{titulo.egreso}]]</h4>
-                            <div id="lista-egresos">
-                                <div class="elemento limpiarEstilos" th:each="egre : ${egreso}">
-                                    <div class="elemento_descripcion">
-                                        [[${new java.text.SimpleDateFormat("dd-MM-yyyy").format(egre.fecha)}]]
-                                    </div>
-                                    <span style="margin-left: 30px">[[${egre.concepto}]]</span>
-                                    <div class="derecha">
-                                        <div class="elemento_valor">
-                                            [['-' + ${new java.text.DecimalFormat('#,##0.00').format(egre.cantidad)} + ' COP']]
-                                        </div>
-                                        <div class="elemento_porcentaje">
-                                            [[${nf.format(egre.cantidad/saldoEgreso)}]]
-                                        </div>
-                                        <div class="elemento_eliminar">
-                                            <a class="elemento_eliminar--btn" th:href="@{/eliminar(idMovimiento=${egre.idMovimiento})}">
-                                                <i class="fa-sharp fa-solid fa-trash"></i>
-                                            </a>
+                        <h4 class="egreso_titulo">[[#{titulo.egreso}]]</h4>
+                        <div class="accordion" id="accordionEgreso" th:each="cat : ${catEgreso}">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" th:id="heading-egre + ${cat.idCategoria}">
+                                    <button class="accordion-button collapsed text-white" style="background: #FF5049" type="button" data-bs-toggle="collapse" th:data-bs-target="'#' + collapse-egre + ${cat.idCategoria}" aria-expanded="false" th:aria-controls="collapse-egre + ${cat.idCategoria}">
+                                        [[${cat.nombre}]]
+                                    </button>
+                                </h2>
+                                <div th:id="collapse-egre + ${cat.idCategoria}" class="accordion-collapse collapse" th:aria-labelledby="heading-egre + ${cat.idCategoria}" data-bs-parent="#accordionEgreso">
+                                    <div class="accordion-body">
+                                        <div th:each="egre : ${egreso}">
+                                            <div class="egreso" th:if="${egre.categorias.getIdCategoria() == cat.idCategoria}">
+                                                <div id="lista-egresos">
+                                                    <div class="elemento limpiarEstilos">
+                                                        <div class="elemento_descripcion">
+                                                            [[${new java.text.SimpleDateFormat("dd-MM-yyyy").format(egre.fecha)}]]
+                                                        </div>
+                                                        <span style="margin-left: 30px">[[${egre.concepto}]]</span>
+                                                        <div class="derecha">
+                                                            <div class="elemento_valor">
+                                                                [['-' + ${new java.text.DecimalFormat('#,##0.00').format(egre.cantidad)} + ' COP']]
+                                                            </div>
+                                                            <div class="elemento_porcentaje">
+                                                                [[${nf.format(egre.cantidad/saldoEgreso)}]]
+                                                            </div>
+                                                            <div class="elemento_eliminar">
+                                                                <a class="elemento_eliminar--btn" th:href="@{/eliminar(idMovimiento=${egre.idMovimiento})}">
+                                                                    <i class="fa-sharp fa-solid fa-trash"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

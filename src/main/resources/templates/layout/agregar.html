@@ -26,6 +26,17 @@
                             <input type="date" class="form-control"  
                                    required="true" th:field="*{fecha}"/>
                         </div>
+                        <div class="col-auto">
+                            <div class="input-group">
+                                <button class="btn btn-primary" type="button" th:title="#{categoria.crear}" data-bs-toggle="modal" data-bs-target="#category">
+                                    <i class="fas fa-solid fa-plus"></i>
+                                </button>
+                                <select id="selectval" name="nombre" class="form-select" th:placeholder="#{categoria.select}" th:field="*{categorias}">
+                                    <option th:each="cat : ${catlista}" th:value="${cat.idCategoria}" selected="true">[[${cat.nombre}]]</option>                                
+                                </select>  
+                                
+                            </div>
+                        </div>
                         <div class="col">
                             <input type="text" class="form-control" id="descripcion" th:placeholder="#{ph.descripcion}" 
                                    required="true" th:field="*{concepto}"/>

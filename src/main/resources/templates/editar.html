@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head th:replace="layout/plantilla :: head"> 
+        <title>Inicio</title>
+    </head>
+    <body>
+        <form th:action="@{/guardar-categoria}" method="post" th:object="${categoria}" class="was-validated">
+            <input type="hidden" name="idCategoria" th:field="*{idCategoria}"/>
+            <div class="details">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 mx-auto">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4>[[#{row.editar}]]</h4>
+                                </div>
+                                <div class="card-body">
+                                    <input type="text" class="form-control  mb-3" th:placeholder="#{categoria.nueva}" th:field="*{nombre}" required="true"/>
+                                    <button type="submit" class="btn btn-success"><i class="fas fa-solid fa-check"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </body>
+</html>
